@@ -2,30 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Pie, Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js/auto';
 
-function ActivityPieChart() {
-  const [activities, setActivities] = useState([]);
-
-  useEffect(() => {
-    fetchActivities();
-  }, []);
-
+function ActivityPieChart({activities}) {
   Chart.register(...registerables);
-
-  const fetchActivities = async () => {
-    try {
-        const response = await fetch('http://localhost:3000/activities');
-        const data = await response.json();
-        const updatedActivities = data.map(activity => {
-          // Extract only date part from the deadline
-          activity.deadline = new Date(activity.deadline).toLocaleDateString();
-          return activity;
-        });
-        setActivities(updatedActivities);
-      } catch (error) {
-        console.error('Error fetching activities:', error);
-      }
-  };
-
   const getActivityStatus = (deadline, status) => {
     const currentTimestamp = Date.now();
     const deadlineTimestamp = new Date(deadline).getTime();
@@ -70,8 +48,8 @@ function ActivityPieChart() {
     labels: Object.keys(countByDateAndStatus),
     datasets: Object.keys(countByStatus).map((status, index) => ({
       label: status,
-      backgroundColor: index === 0 ? '#0D6EFD' : index === 1 ? '#DC3545' : index === 2 ? '#FFC107' : '#28A745',
-      borderColor: index === 0 ? '#0D6EFD' : index === 1 ? '#DC3545' : index === 2 ? '#FFC107' : '#28A745',
+      backgroundColor: status === 'In Progress' ? '#0D6EFD' : status === 'Cancelled' ? '#DC3545' : status === 'Pending' ? '#FFC107' : '#28A745',
+      borderColor: status === 'In Progress' ? '#0D6EFD' : status === 'Cancelled' ? '#DC3545' : status === 'Pending' ? '#FFC107' : '#28A745',
       borderWidth: 1,
       data: Object.keys(countByDateAndStatus).map(date => countByDateAndStatus[date][status] || 0)
     }))

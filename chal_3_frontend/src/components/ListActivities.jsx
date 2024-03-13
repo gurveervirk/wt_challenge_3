@@ -9,11 +9,6 @@ const ListActivities = () => {
     fetchCompletionRatioBadge();
   }, []);
 
-  // useEffect(() => {
-  //   generateDayWiseActivitiesData();
-  //   generateOverallActivitiesData();
-  // }, [activities]);
-
   const fetchActivities = async () => {
     try {
       const response = await fetch('http://localhost:3000/activities');
@@ -93,7 +88,7 @@ const ListActivities = () => {
         )}
       </div>
       <h2>Activities Charts</h2>
-      <ActivityPieChart/>
+      <ActivityPieChart activities={activities}/>
       <h2>Activities</h2>
       <table className="table">
         <thead>
