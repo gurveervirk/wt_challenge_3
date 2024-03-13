@@ -1,8 +1,8 @@
 // App.jsx
 import React from 'react';
 import MyNavbar from './components/Navbar';
-import Admin from './components/Admin';
-import Projects from './components/Projects';
+import AddActivities from './components/AddActivities';
+import ListActivities from './components/ListActivities';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 function App() {
@@ -11,8 +11,8 @@ function App() {
       <MyNavbar />
       <Router>
         <Routes>
-          <Route path = "/admin" element = {<Admin/>}/>
-          <Route path = "/project" element = {<Projects/>}/>
+          <Route path = "/addactivities" element = {<AddActivities/>}/>
+          <Route path = "/listactivities" element = {<ListActivities/>}/>
         </Routes>
       </Router>
     </div>
